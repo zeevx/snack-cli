@@ -6,8 +6,24 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 
+/**
+ * Register Collision Error Handling
+ */
+(new NunoMaduro\Collision\Provider)->register();
+
+/**
+ * Start Console Application
+ */
 $application = new Application();
 
-// Register commands
+$application->setName('LILLYDOO Snack CLI');
+$application->setVersion('1.0.0');
+
+/**
+ * Register Commands
+ */
+$application->addCommands([
+   new App\Command\ShowStockCommand()
+]);
 
 $application->run();

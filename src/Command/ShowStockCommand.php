@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Machine\Slot\Slots;
 use App\Machine\SnackMachine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -14,24 +15,24 @@ final class ShowStockCommand extends Command
 {
     protected  function configure(): void
     {
-        //...
+        $this
+            ->setName('show-stock')
+            ->setDescription('Command to show snacks stocks')
+            ->setHelp('A command to help show the snacks available in stock');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // $snackMachine = new SnackMachine...
+         $snackMachine = new SnackMachine(new Slots);
+         $loadMachine = $snackMachine->loadMachine();
 
         $table = new Table($output);
         $table
-            ->setHeaders(['', 'a', 'b'])
-            ->setRows([
-                //...
-                ['1', 'Mars', 'Coke'],
-                ['2', "M&M's", 'Pepsi'],
-            ]);
+            ->setHeaders($loadMachine['columns'])
+            ->setRows($loadMachine['rows']);
 
         $table->render();
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
