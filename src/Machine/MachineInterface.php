@@ -8,6 +8,14 @@ use App\Machine\Purchase\TransactionInterface as PurchaseTransactionInterface;
 
 interface MachineInterface
 {
-    public function execute(PurchaseTransactionInterface $purchaseTransaction);
-    public function loadMachine();
+    /**
+     * @param PurchaseTransactionInterface $purchaseTransaction
+     * @return void
+     */
+    public function execute(PurchaseTransactionInterface $purchaseTransaction): void;
+
+    /**
+     * @return array
+     */
+    public function loadMachine(): array;
 }

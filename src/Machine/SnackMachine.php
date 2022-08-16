@@ -14,47 +14,76 @@ class SnackMachine implements MachineInterface
     private float $amountSpent;
     private array $change;
 
+    /**
+     * @param FirmwareInterface $firmware
+     */
     public function __construct(FirmwareInterface $firmware)
     {
         $this->firmaware = $firmware;
     }
 
+    /**
+     * @return array
+     */
     public function loadMachine(): array
     {
         return $this->firmaware->getSlots();
     }
 
+    /**
+     * @param string $snackName
+     * @return void
+     */
     public function setSnackName(string $snackName)
     {
         $this->snackName = $snackName;
     }
 
+    /**
+     * @param float $amountSpent
+     * @return void
+     */
     public function setAmountSpent(float $amountSpent)
     {
         $this->amountSpent = $amountSpent;
     }
 
+    /**
+     * @param array $change
+     * @return void
+     */
     public function setChange(array $change)
     {
         $this->change = $change;
     }
 
+    /**
+     * @return string
+     */
     public function getSnackName(): string
     {
         return $this->snackName;
     }
 
+    /**
+     * @return float
+     */
     public function getAmountSpent(): float
     {
         return $this->amountSpent;
     }
 
+    /**
+     * @return array
+     */
     public function getChange(): array
     {
         return $this->change;
     }
 
     /**
+     * @param PurchaseTransactionInterface $purchaseTransaction
+     * @return void
      * @throws \Exception
      */
     public function execute(PurchaseTransactionInterface $purchaseTransaction): void

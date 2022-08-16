@@ -7,6 +7,9 @@ use App\Machine\Firmware\FirmwareInterface;
 class Slots implements FirmwareInterface
 {
 
+    /**
+     * @return string[][][]
+     */
     public function getSlots(): array
     {
         return [

@@ -13,6 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ShowStockCommand extends Command
 {
+    /**
+     * @return void
+     */
     protected  function configure(): void
     {
         $this
@@ -21,6 +24,11 @@ final class ShowStockCommand extends Command
             ->setHelp('A command to help show the snacks available in stock');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
          $snackMachine = new SnackMachine(new Slots);
