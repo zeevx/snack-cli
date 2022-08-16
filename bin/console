@@ -23,7 +23,8 @@ $application->setVersion('1.0.0');
  * Register Commands
  */
 $application->addCommands([
-   new App\Command\ShowStockCommand()
+   new App\Command\ShowStockCommand(),
+   new App\Command\PurchaseCommand(),
 ]);
 
 $application->run();

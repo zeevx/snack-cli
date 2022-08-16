@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Machine\Slot\Purchase;
+use App\Machine\Slot\Slots;
 use App\Machine\SnackMachine;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\MissingInputException;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -14,27 +18,49 @@ final class PurchaseCommand extends Command
 {
     protected  function configure(): void
     {
-        //...
+        $this
+            ->setName('purchase')
+            ->setDescription('Command to make a purchase of snacks from the stocks')
+            ->setHelp('A command to help you make a purchase of snacks from the stocks')
+            ->addArgument('snack', InputArgument::REQUIRED, 'The snack you want to purchase.')
+            ->addArgument('quantity', InputArgument::REQUIRED, 'The number of snack(s) you want to purchase.')
+            ->addArgument('amount', InputArgument::REQUIRED, 'The amount you want to use for the purchase.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // $snackMachine = new SnackMachine...
+        try {
+            $pricePerSnack = 2.99;
+            $snack = $input->getArgument('snack');
+            $quantity = intval($input->getArgument('quantity'));
+            $amount = floatval($input->getArgument('amount'));
 
-        $output->writeLn("You bought 2 packs of M&M's for 5.98€, each for 2.99€");
-        $output->writeLn("Your change is: ");
+            $snackMachine = new SnackMachine(new Slots);
+            $snackMachine->execute(new Purchase(
+                snack: $snack,
+                paidAmount: $amount,
+                quantity: $quantity,
+                pricePerSnack: $pricePerSnack
+            ));
+            $snackName = $snackMachine->getSnackName();
+            $amountSpent = $snackMachine->getAmountSpent();
+            $change = $snackMachine->getChange();
 
-        $table = new Table($output);
-        $table
-            ->setHeaders(['Coins', 'Count'])
-            ->setRows([
-                //...
-                ['2', 2],
-                ['0.02', 1],
-            ]);
+            $output->writeLn("You bought {$quantity} packs of {$snackName} for {$amountSpent}€, each for {$pricePerSnack}€");
+            $output->writeLn("Your change is: ");
 
-        $table->render();
+            $table = new Table($output);
+            $table
+                ->setHeaders(['Coins', 'Count'])
+                ->setRows($change);
 
-        return 0;
+            $table->render();
+            return Command::SUCCESS;
+        }
+        catch (\Exception $exception){
+
+            $output->writeln($exception->getMessage());
+            return Command::FAILURE;
+        }
     }
 }
