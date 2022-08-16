@@ -9,7 +9,7 @@ use App\Machine\Purchase\TransactionInterface as PurchaseTransactionInterface;
 interface MachineInterface
 {
     /**
-     * @param PurchaseTransactionInterface $purchaseTransaction
+     * @param  PurchaseTransactionInterface $purchaseTransaction
      * @return void
      */
     public function execute(PurchaseTransactionInterface $purchaseTransaction): void;

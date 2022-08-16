@@ -30,8 +30,8 @@ final class PurchaseCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param  InputInterface  $input
+     * @param  OutputInterface $output
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -43,12 +43,14 @@ final class PurchaseCommand extends Command
             $amount = floatval($input->getArgument('amount'));
 
             $snackMachine = new SnackMachine(new Slots);
-            $snackMachine->execute(new Purchase(
-                snack: $snack,
-                paidAmount: $amount,
-                quantity: $quantity,
-                pricePerSnack: $pricePerSnack
-            ));
+            $snackMachine->execute(
+                new Purchase(
+                    snack: $snack,
+                    paidAmount: $amount,
+                    quantity: $quantity,
+                    pricePerSnack: $pricePerSnack
+                )
+            );
             $snackName = $snackMachine->getSnackName();
             $amountSpent = $snackMachine->getAmountSpent();
             $change = $snackMachine->getChange();

@@ -17,11 +17,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '',
             'quantity' => 2,
             'amount' => 10.00
-        ]);
+            ]
+        );
         $output = $commandTester->getDisplay();
         $this->assertEquals('Stock column or row is missing.', trim($output));
     }
@@ -32,11 +34,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '1a',
             'quantity' => '',
             'amount' => 10.00
-        ]);
+            ]
+        );
         $output = $commandTester->getDisplay();
         $this->assertEquals('Snack quantity is required.', trim($output));
     }
@@ -47,11 +51,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '1a',
             'quantity' => 2,
             'amount' => ''
-        ]);
+            ]
+        );
         $output = $commandTester->getDisplay();
         $this->assertEquals('Amount is required.', trim($output));
     }
@@ -62,11 +68,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '1c',
             'quantity' => 200,
             'amount' => 10.00
-        ]);
+            ]
+        );
         $output = $commandTester->getDisplay();
         $this->assertEquals('Snack not found, check the column used.', trim($output));
     }
@@ -77,11 +85,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '3a',
             'quantity' => 200,
             'amount' => 10.00
-        ]);
+            ]
+        );
         $output = $commandTester->getDisplay();
         $this->assertEquals('Snack not found, check the row used.', trim($output));
     }
@@ -92,11 +102,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '1a',
             'quantity' => 200,
             'amount' => 11.00
-        ]);
+            ]
+        );
         $output = $commandTester->getDisplay();
         $validAmounts = [5,10,20,50];
         $validAmounts = implode(',', $validAmounts);
@@ -109,11 +121,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '1a',
             'quantity' => 200,
             'amount' => 10.00
-        ]);
+            ]
+        );
         $output = $commandTester->getDisplay();
         $this->assertEquals("You do not have enough money for this snack.", trim($output));
     }
@@ -124,11 +138,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '1a',
             'quantity' => 2,
             'amount' => 10.00
-        ]);
+            ]
+        );
         $commandTester->assertCommandIsSuccessful();
     }
 
@@ -138,11 +154,13 @@ class PurchaseStockCommandTest extends TestCase
         $application->add(new PurchaseCommand());
         $command = $application->find('purchase');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $commandTester->execute(
+            [
             'snack' => '1a',
             'quantity' => 2,
             'amount' => 10.00
-        ]);
+            ]
+        );
         $commandTester->assertCommandIsSuccessful();
         $output = $commandTester->getDisplay();
         $sample_output = <<<EOD

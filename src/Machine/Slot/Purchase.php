@@ -14,9 +14,9 @@ class Purchase implements TransactionInterface
 
     /**
      * @param string $snack
-     * @param float $paidAmount
-     * @param int $quantity
-     * @param float $pricePerSnack
+     * @param float  $paidAmount
+     * @param int    $quantity
+     * @param float  $pricePerSnack
      */
     public function __construct(string $snack, float $paidAmount, int $quantity, float $pricePerSnack)
     {

@@ -31,7 +31,7 @@ class SnackMachine implements MachineInterface
     }
 
     /**
-     * @param string $snackName
+     * @param  string $snackName
      * @return void
      */
     public function setSnackName(string $snackName)
@@ -40,7 +40,7 @@ class SnackMachine implements MachineInterface
     }
 
     /**
-     * @param float $amountSpent
+     * @param  float $amountSpent
      * @return void
      */
     public function setAmountSpent(float $amountSpent)
@@ -49,7 +49,7 @@ class SnackMachine implements MachineInterface
     }
 
     /**
-     * @param array $change
+     * @param  array $change
      * @return void
      */
     public function setChange(array $change)
@@ -82,7 +82,7 @@ class SnackMachine implements MachineInterface
     }
 
     /**
-     * @param PurchaseTransactionInterface $purchaseTransaction
+     * @param  PurchaseTransactionInterface $purchaseTransaction
      * @return void
      * @throws \Exception
      */
@@ -93,17 +93,17 @@ class SnackMachine implements MachineInterface
 
         $snack = $purchaseTransaction->getSnack();
         $snack = str_split($snack);
-        if (count($snack) != 2){
+        if (count($snack) != 2) {
             throw new \Exception("Stock column or row is missing.");
         }
 
         $quantity = $purchaseTransaction->getQuantity();
-        if (! $quantity){
+        if (! $quantity) {
             throw new \Exception("Snack quantity is required.");
         }
 
         $paidAmount = $purchaseTransaction->getPaidAmount();
-        if (!$paidAmount){
+        if (! $paidAmount) {
             throw new \Exception("Amount is required.");
         }
 
@@ -113,25 +113,25 @@ class SnackMachine implements MachineInterface
         $snack_rows = $snacks['rows'];
 
         $column_key = array_search($column, $snack_columns);
-        if (! $column_key){
+        if (! $column_key) {
             throw new \Exception("Snack not found, check the column used.");
         }
 
 
         $row_key = array_search($row, array_column($snack_rows, 0));
-        if (! $row_key && $row_key !== 0){
+        if (! $row_key && $row_key !== 0) {
             throw new \Exception("Snack not found, check the row used.");
         }
 
         $validAmounts = [5,10,20,50];
-        if (!in_array($paidAmount, $validAmounts)){
+        if (! in_array($paidAmount, $validAmounts)) {
             $validAmounts = implode(',', $validAmounts);
             throw new \Exception("Invalid amount of money used, you can only use: {$validAmounts}");
         }
 
 
         $calculatedAmountSpent = $pricePerPack * $quantity;
-        if ($paidAmount < $calculatedAmountSpent){
+        if ($paidAmount < $calculatedAmountSpent) {
             throw new \Exception("You do not have enough money for this snack.");
         }
 
@@ -142,7 +142,7 @@ class SnackMachine implements MachineInterface
         foreach ($validCoins as $coin){
             $remainder = fmod($changeAmount, $coin);
             $count = ($changeAmount - $remainder)/$coin;
-            if ($count > 0){
+            if ($count > 0) {
                 $changeCoins[] = [$coin, $count];
             }
             $changeAmount = round($remainder, 2);
